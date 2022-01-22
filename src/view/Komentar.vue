@@ -11,7 +11,7 @@
             mb-3
           "
         >
-          <h5>Unread comments(6)</h5>
+          <h5>Unread comments({{ komentar.length }})</h5>
           <div class="buttons">
             <span class="badge bg-white d-flex flex-row align-items-center">
               <router-link to="/" class="text-primary p-2 text-decoration-none"

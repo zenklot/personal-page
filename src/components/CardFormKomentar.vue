@@ -4,14 +4,15 @@
             <span class="input-group-text">Nama</span>
             <input
               type="text"
+              id="nama"
               class="form-control"
-              placeholder="Nama" v-model="komen.nama"
+              placeholder="Nama" 
             />
           </div>
           <div class="input-group">
             <span class="input-group-text">Komentar</span>
             <textarea
-              class="form-control" v-model="komen.body"
+              class="form-control" id="body"
             ></textarea>
           </div>
 
@@ -23,7 +24,7 @@
 export default {
   data(){
     return{
-      komen:{
+      komentar_post:{
         id:"",
         nama:"",
         body:"",
@@ -58,17 +59,28 @@ export default {
       });
     },
     postKomentar(){
+       let loader = this.$loading.show()
+      let nama = document.getElementById('nama').value
+      let body = document.getElementById('body').value
       let tanggal = new Date()
-      this.komen.id = this.komentar.length + 1
-      this.komen.created_at = tanggal.toISOString()
-      if(this.komen.nama.length > 3 && this.komen.body.length > 6){
-        this.axios.post('/komentar', this.komen).then(()=>{
+      let komentar_baru = {
+        id: this.komentar.length + 1,
+        nama,
+        body,
+        created_at:tanggal.toISOString()
+      }
+      
+      if(nama.length > 3 && body.length > 6){
+        this.axios.post('/komentar', komentar_baru).then(()=>{
           this.showToast('success','Komentar baru Ditambahkan')
         }).catch(()=>{
           this.showAlert('error','Gagal Menambahkan Komentar Baru')
         }).finally(()=>{
-          this.$store.commit('setPushKomentar', this.komen)
+          this.$store.commit('setPushKomentar', komentar_baru)
           this.showToast('info','Komentar baru Ditambahkan (Lokal)')
+          document.getElementById('nama').value = ''
+          document.getElementById('body').value = ''
+           loader.hide()
         })
       }else{
          this.showAlert('warning','Gagal Menambahkan Komentar Baru','Mohon Masukan Inputan Dengan Benar!')
