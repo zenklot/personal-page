@@ -1,4 +1,5 @@
 # personal-page
+Projek VUE Sederhana yang menampilkan biodata dan komentar yang didapatkan dari link : https://my-json-server.typicode.com/zenklot/db-komentar/komentar
 
 ## Project setup
 ```
